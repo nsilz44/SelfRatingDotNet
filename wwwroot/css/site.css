@@ -1,0 +1,103 @@
+﻿html {
+    font-size: 14px;
+    position: relative;
+    min-height: 100%;
+}
+
+@media (min-width: 768px) {
+    html {
+        font-size: 16px;
+    }
+}
+
+body {
+    margin-bottom: 60px;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+/* Custom styles for skill rating controls */
+.form-range {
+    width: 150px;
+}
+
+.skill-rating {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+/* Card styles */
+.card {
+    margin-bottom: 1rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.card-header {
+    background-color: #f8f9fa;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .btn-group {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    
+    .btn-group .btn {
+        width: 100%;
+        margin-left: 0 !important;
+    }
+}
+
+/* Toast styles */
+.alert {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1050;
+    animation: slideIn 0.5s ease-out;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+/* Modal backdrop */
+.modal-backdrop {
+    background-color: rgba(0,0,0,0.5);
+}
+
+/* Footer styling */
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    white-space: nowrap;
+    line-height: 60px;
+}
+
+/* Form validation styles */
+.field-validation-error {
+    color: #dc3545;
+}
+
+.input-validation-error {
+    border-color: #dc3545;
+}
+
+.validation-summary-errors {
+    color: #dc3545;
+    margin-bottom: 1rem;
+}

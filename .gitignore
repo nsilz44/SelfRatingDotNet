@@ -1,0 +1,57 @@
+# Build results
+bin/
+obj/
+out/
+
+# User-specific files
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Visual Studio Code settings
+.vscode/
+
+# Rider settings
+.idea/
+
+# ASP.NET secrets
+secrets.json
+
+# IIS Express
+.vs/
+*.vspscc
+*.vssscc
+
+# Logs
+*.log
+
+# Npm packages
+node_modules/
+
+# Publish outputs
+wwwroot/dist/
+wwwroot/node_modules/
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Resharper
+_ReSharper*/
+*.[Rr]e[Ss]harper
+
+# DotCover
+*.dotCover
+
+# Azure Pipelines
+.azure-pipelines/
+
+# Local environment files
+appsettings.Development.json
+appsettings.Local.json
+
+# Backup & temp files
+*.bak
+*.tmp
+*.swp
