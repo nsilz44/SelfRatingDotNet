@@ -9,7 +9,6 @@
 ## Potential Improvements
 
 2. Make a historySection partial next to the category bar
-3. HistorySection shows all previous history
 4. Edit Button for notes only
 5. Remove actions
 6. Default skill rating should be 5.0

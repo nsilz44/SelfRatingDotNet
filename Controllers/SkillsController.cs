@@ -159,5 +159,19 @@ namespace Rating.Controllers
             ViewData["SkillName"] = skill.Name;
             return View(history);
         }
+
+        [HttpGet]
+        public async Task<IActionResult> AllSkillHistory()
+        {
+            var userId = "1";
+            if (userId == null)
+                return Challenge();
+
+            var history = await _skillService.GetAllSkillHistoryAsync(userId);
+            var categories = await _skillService.GetCategoriesAsync(userId);
+
+            ViewData["SkillName"] = userId.ToString();
+            return View(history);
+        }
     }
 }

@@ -133,5 +133,15 @@ namespace Rating.Data
                 .OrderByDescending(h => h.ChangedAt)
                 .ToListAsync();
         }
+
+        public async Task<List<SkillHistory>> GetAllSkillHistoryAsync(string userId)
+        {
+            return await _db.SkillHistories
+                .Where(h => h.UserId == userId)
+                .Include(h => h.Skill)
+                .ThenInclude(s => s.Category) 
+                .OrderByDescending(h => h.ChangedAt)
+                .ToListAsync();
+        }
     }
 }
