@@ -101,3 +101,79 @@ body {
     color: #dc3545;
     margin-bottom: 1rem;
 }
+
+/* Bar chart background for slider */
+.slider-bar-chart {
+    width: 350px;
+    height: 2.2em;
+    accent-color: #007bff;
+    margin-right: 10px;
+}
+
+/* Bar chart background for slider without grey bars */
+.slider-bar-chart {
+    width: 350px;
+    height: 2.2em;
+    accent-color: #007bff;
+    margin-right: 10px;
+}
+
+    /* Webkit browsers (Chrome, Edge, Safari) */
+    .slider-bar-chart::-webkit-slider-runnable-track {
+        height: 16px;
+        border-radius: 8px;
+        background: linear-gradient( to right, #007bff 0% 10%, #339dff 10% 25%, #66bfff 25% 45%, #99d6ff 45% 70%, #ccecff 70% 90%, #e6f7ff 90% 100% );
+    }
+
+    /* Firefox */
+    .slider-bar-chart::-moz-range-track {
+        height: 16px;
+        border-radius: 8px;
+        background: linear-gradient( to right, #007bff 0% 10%, #339dff 10% 25%, #66bfff 25% 45%, #99d6ff 45% 70%, #ccecff 70% 90%, #e6f7ff 90% 100% );
+    }
+
+    /* IE/Edge */
+    .slider-bar-chart::-ms-fill-lower,
+    .slider-bar-chart::-ms-fill-upper {
+        background: linear-gradient( to right, #007bff 0% 10%, #339dff 10% 25%, #66bfff 25% 45%, #99d6ff 45% 70%, #ccecff 70% 90%, #e6f7ff 90% 100% );
+    }
+
+    /* Thumb styling for all browsers */
+    .slider-bar-chart::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        appearance: none;
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        background: #007bff;
+        border: 3px solid #fff;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+        cursor: pointer;
+        transition: background 0.3s;
+    }
+
+        .slider-bar-chart::-webkit-slider-thumb:hover {
+            background: #0056b3;
+        }
+
+    .slider-bar-chart::-moz-range-thumb {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        background: #007bff;
+        border: 3px solid #fff;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+        cursor: pointer;
+        transition: background 0.3s;
+    }
+
+    .slider-bar-chart::-ms-thumb {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        background: #007bff;
+        border: 3px solid #fff;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+        cursor: pointer;
+        transition: background 0.3s;
+    }

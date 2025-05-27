@@ -57,7 +57,7 @@
                                 @using (Html.BeginForm("UpdateSkillRating", "Skills", new { id = skill.Id }, FormMethod.Post, true, new { @class = "d-flex align-items-center gap-2" }))
                                 {
                                     <button type="button" class="btn btn-outline-secondary decrement-btn" data-skill-id="@skill.Id">–</button>
-                                    <input id="ratingSlider-@skill.Id" type="range" name="rating" min="0" max="@(skill.CustomMaxRating ?? 10)" step="0.1" value="@skill.Rating" class="form-range" style="width:150px;"
+                                    <input id="ratingSlider-@skill.Id" type="range" name="rating" min="0" max="@(skill.CustomMaxRating ?? 10)" step="0.1" value="@skill.Rating" class="slider-bar-chart" style="width:150px;"
                                            oninput="this.nextElementSibling.nextElementSibling.textContent = this.value + ' / ' + @(skill.CustomMaxRating ?? 10)" />
                                     <button type="button" class="btn btn-outline-primary increment-btn" data-skill-id="@skill.Id">+</button>
                                     <span id="sliderValue-@skill.Id" >@skill.Rating.ToString("0.0") / @(skill.CustomMaxRating ?? 10)</span>
