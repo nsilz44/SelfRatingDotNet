@@ -25,7 +25,7 @@
 {
     <div class="card mb-3">
         <div class="card-header d-flex justify-content-between align-items-center">
-            <a>Category:<b>@category.Name</b> Average:<b>@(category.Skills.Select(x => x.Rating).DefaultIfEmpty(0.0).Average())</b></a>
+            <a>Category:<b>@category.Name</b> Average:<b>@(category.Skills.Select(x => x.Rating).DefaultIfEmpty(0.0).Average().ToString("0.0"))</b></a>
             <span>
                 <a href="@Url.Action("EditCategory", "Skills", new { id = category.Id })" class="btn btn-outline-secondary btn-sm me-1">Edit</a>
                 @using (Html.BeginForm("DeleteCategory", "Skills", new { id = category.Id }, FormMethod.Post, true, new { @class = "d-inline" }))
@@ -56,11 +56,11 @@
                             <td>
                                 @using (Html.BeginForm("UpdateSkillRating", "Skills", new { id = skill.Id }, FormMethod.Post, true, new { @class = "d-flex align-items-center gap-2" }))
                                 {
-                                    <button type="button" id="decrementBtn" class="btn btn-outline-primary" style="margin-left: 8px; font-size: 1.2em; padding: 0.25em 0.7em;">-</button>
-                                    <input id="ratingSlider" type="range" name="rating" min="0" max="@(skill.CustomMaxRating ?? 10)" step="0.1" value="@skill.Rating" class="form-range" style="width:150px;"
+                                    <button type="button" class="btn btn-outline-secondary decrement-btn" data-skill-id="@skill.Id">–</button>
+                                    <input id="ratingSlider-@skill.Id" type="range" name="rating" min="0" max="@(skill.CustomMaxRating ?? 10)" step="0.1" value="@skill.Rating" class="form-range" style="width:150px;"
                                            oninput="this.nextElementSibling.nextElementSibling.textContent = this.value + ' / ' + @(skill.CustomMaxRating ?? 10)" />
-                                    <button type="button" id="incrementBtn" class="btn btn-outline-primary" style="margin-left: 8px; font-size: 1.2em; padding: 0.25em 0.7em;">+</button>
-                                    <span>@skill.Rating.ToString("0.0") / @(skill.CustomMaxRating ?? 10)</span>
+                                    <button type="button" class="btn btn-outline-primary increment-btn" data-skill-id="@skill.Id">+</button>
+                                    <span id="sliderValue-@skill.Id" >@skill.Rating.ToString("0.0") / @(skill.CustomMaxRating ?? 10)</span>
                                     <button type="submit" class="btn btn-secondary btn-sm">Save</button>
                                 }
                             </td>
@@ -82,36 +82,36 @@
         </div>
     </div>
 }
-<a href="@Url.Action("AllSkillHistory", "Skills",new { id = 1 })" class="btn btn-info mb-3">View Overall Skill History</a>
 
 @await Html.PartialAsync("_AllSkillHistoryPartial", Model.AllSkillHistory)
 
 <script>
-    const slider = document.getElementById('ratingSlider');
-    const incrementBtn = document.getElementById('incrementBtn');
-    const decrementBtn = document.getElementById('decrementBtn');
-    const sliderValue = document.getElementById('sliderValue');
-
-    incrementBtn.addEventListener('click', function () {
-        let current = parseFloat(slider.value);
-        let step = parseFloat(slider.step) || 0.1;
-        let max = parseFloat(slider.max);
-        let next = Math.min(current + step, max);
-        slider.value = next.toFixed(1);
-        this.nextElementSibling.textContent =  "" + slider.value +  " / " +max;
+    document.querySelectorAll('.increment-btn').forEach(function(btn) {
+        btn.addEventListener('click', function () {
+            const skillId = btn.dataset.skillId;
+            const slider = document.getElementById('ratingSlider-' + skillId);
+            const valueSpan = document.getElementById('sliderValue-' + skillId);
+            let current = parseFloat(slider.value);
+            let step = parseFloat(slider.step) || 0.1;
+            let max = parseFloat(slider.max);
+            let next = Math.min(current + step, max);
+            slider.value = next.toFixed(1);
+            valueSpan.textContent = "" +slider.value +" / " + max;
+        });
     });
 
-    decrementBtn.addEventListener('click', function () {
-        let current = parseFloat(slider.value);
-        let step = parseFloat(slider.step) || 0.1;
-        let max = parseFloat(slider.max);
-        let min = parseFloat(slider.min);
-        let next = Math.max(current - step, min);
-        slider.value = next.toFixed(1);
-        this.nextElementSibling.nextElementSibling.nextElementSibling.textContent =  "" + slider.value +  " / " +max;
-    });
-
-    slider.addEventListener('input', function () {
-        sliderValue.textContent = slider.value;
+    document.querySelectorAll('.decrement-btn').forEach(function(btn) {
+        btn.addEventListener('click', function () {
+            const skillId = btn.dataset.skillId;
+            const slider = document.getElementById('ratingSlider-' + skillId);
+            const valueSpan = document.getElementById('sliderValue-' + skillId);
+            let current = parseFloat(slider.value);
+            let step = parseFloat(slider.step) || 0.1;
+            let min = parseFloat(slider.min);
+            let max = parseFloat(slider.max);
+            let next = Math.max(current - step, min);
+            slider.value = next.toFixed(1);
+            valueSpan.textContent = "" +slider.value + " / " + max;
+        });
     });
 </script>

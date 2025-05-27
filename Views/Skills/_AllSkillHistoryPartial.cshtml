@@ -27,7 +27,7 @@ else
                     <td>@skillHistoryModel.Skill.Name</td>
                     <td>@skillHistoryModel.Skill.Category.Name</td>
                     <td>@skillHistoryModel.ChangedAt.ToLocalTime().ToString("g")</td>
-                    <td>@((skillHistoryModel.NewRating - skillHistoryModel.OldRating).ToString("+0.0;-#"))</td>
+                    <td>@((skillHistoryModel.NewRating - skillHistoryModel.OldRating).ToString("+0.0;-0.0"))</td>
                 </tr>
             }
         </tbody>
