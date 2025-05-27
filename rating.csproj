@@ -28,4 +28,8 @@
     <None Include="D:\Repo\Progression\rating\.editorconfig" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Models\" />
+  </ItemGroup>
+
 </Project>
