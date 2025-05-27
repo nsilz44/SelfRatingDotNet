@@ -181,17 +181,5 @@ namespace Rating.Controllers
             ViewData["SkillName"] = userId.ToString();
             return View(history);
         }
-
-        [HttpGet]
-        public async Task<ActionResult> AllSkillHistoryPartial()
-        {
-            var userId = "1";
-            if (userId == null)
-                return Challenge();
-
-            var history = await _skillService.GetAllSkillHistoryAsync(userId);
-
-            return PartialView("_AllSkillHistoryPartial", history);
-        }
     }
 }
