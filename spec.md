@@ -8,7 +8,8 @@
 
 ## Potential Improvements
 
-8. rating slider look bigger and better
-11. Create a hexagon shape for all the categories 
+
+12. Align everything
+
 9. Finish the light mode theme - background picture
 10. Create a button for dark mode

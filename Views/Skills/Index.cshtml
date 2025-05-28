@@ -84,7 +84,19 @@
 }
 
 @await Html.PartialAsync("_AllSkillHistoryPartial", Model.AllSkillHistory)
-
+@await Html.PartialAsync("_CategoryRadarChartPartial", new CategoryRadarChartViewModel
+{
+    CategoryNames = Model.Categories
+        .Where(c => c.Skills.Any())
+        .OrderByDescending(c => c.Skills.Select(s => s.Rating).DefaultIfEmpty(0.0).Average())
+        .Take(9)
+        .Select(c => c.Name).ToList(),
+    CategoryAverages = Model.Categories
+        .Where(c => c.Skills.Any())
+        .OrderByDescending(c => c.Skills.Select(s => s.Rating).DefaultIfEmpty(0.0).Average())
+        .Take(9)
+        .Select(c => Math.Round(c.Skills.Select(s => s.Rating).DefaultIfEmpty(0.0).Average(), 2)).ToList()
+})
 <script>
     document.querySelectorAll('.increment-btn').forEach(function(btn) {
         btn.addEventListener('click', function () {
