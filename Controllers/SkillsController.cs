@@ -16,7 +16,7 @@ namespace Rating.Controllers
         {
             var userId = "1";
             var categories = await _skillService.GetCategoriesAsync(userId);
-            var allSkillHistory = await _skillService.GetAllSkillHistoryAsync(userId);
+            var allSkillHistory = await _skillService.GetAllSkillHistoryAsync(userId,10);
 
             var viewModel = new SkillsIndexViewModel
             {

@@ -3,100 +3,112 @@
     ViewData["Title"] = "Skill Progress Tracker";
 }
 
-<h3>Skill Progress Tracker</h3>
+<h2 style="text-align:center">Skill Progress Tracker</h2>
 
-<div class="mb-3 d-flex gap-2">
-    @using (Html.BeginForm("AddCategory", "Skills", FormMethod.Post, new { @class = "d-flex gap-2" }))
-    {
-        @Html.TextBox("name", "", new { placeholder = "New Category Name", @class = "form-control" })
-        <button type="submit" class="btn btn-primary btn-sm">Add Category</button>
-    }
-</div>
-
-@if (TempData["Message"] != null)
-{
-    <div class="alert alert-success alert-dismissible fade show" role="alert">
-        @TempData["Message"]
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
-}
-
-@foreach (var category in Model.Categories)
-{
-    <div class="card mb-3">
-        <div class="card-header d-flex justify-content-between align-items-center">
-            <a>Category:<b>@category.Name</b> Average:<b>@(category.Skills.Select(x => x.Rating).DefaultIfEmpty(0.0).Average().ToString("0.0"))</b></a>
-            <span>
-                <a href="@Url.Action("EditCategory", "Skills", new { id = category.Id })" class="btn btn-outline-secondary btn-sm me-1">Edit</a>
-                @using (Html.BeginForm("DeleteCategory", "Skills", new { id = category.Id }, FormMethod.Post, true, new { @class = "d-inline" }))
-                {
-                    <button type="submit" class="btn btn-outline-danger btn-sm" onclick="return confirm('Are you sure you want to delete this category?')">Delete</button>
-                }
-            </span>
-        </div>
-        <div class="card-body">
-            @using (Html.BeginForm("AddSkill", "Skills", FormMethod.Post))
-            {
-                <input type="hidden" name="categoryId" value="@category.Id" />
-                <div class="mb-2 d-flex flex-column flex-md-row align-items-md-center gap-2">
-                    <input name="name" placeholder="New Skill Name" class="form-control flex-fill" />
-                    <input type="number" name="rating" step="0.1" min="0" max="10" value="5.0" class="form-control" style="width:100px;max-width:120px;" />
-                    <button type="submit" class="btn btn-success btn-sm">Add Skill</button>
-                </div>
-            }
-            <table class="table table-sm table-responsive-md">
-                <thead>
-                    <tr><th>Skill</th><th>Rating</th><th>Notes</th><th>Update</th></tr>
-                </thead>
-                <tbody>
-                    @foreach (var skill in category.Skills)
-                    {
-                        <tr>
-                            <td>@skill.Name</td>
-                            <td>
-                                @using (Html.BeginForm("UpdateSkillRating", "Skills", new { id = skill.Id }, FormMethod.Post, true, new { @class = "d-flex align-items-center gap-2" }))
-                                {
-                                    <button type="button" class="btn btn-outline-secondary decrement-btn" data-skill-id="@skill.Id">–</button>
-                                    <input id="ratingSlider-@skill.Id" type="range" name="rating" min="0" max="@(skill.CustomMaxRating ?? 10)" step="0.1" value="@skill.Rating" class="slider-bar-chart" style="width:150px;"
-                                           oninput="this.nextElementSibling.nextElementSibling.textContent = this.value + ' / ' + @(skill.CustomMaxRating ?? 10)" />
-                                    <button type="button" class="btn btn-outline-primary increment-btn" data-skill-id="@skill.Id">+</button>
-                                    <span id="sliderValue-@skill.Id" >@skill.Rating.ToString("0.0") / @(skill.CustomMaxRating ?? 10)</span>
-                                    <button type="submit" class="btn btn-secondary btn-sm">Save</button>
-                                }
-                            </td>
-                            <td>@skill.Notes</td>
-                            <td>
-                                <div class="btn-group">
-                                    <a href="@Url.Action("EditSkill", "Skills", new { id = skill.Id })" class="btn btn-outline-secondary btn-sm">Edit</a>
-                                    @using (Html.BeginForm("DeleteSkill", "Skills", new { id = skill.Id }, FormMethod.Post, true, new { @class = "d-inline" }))
-                                    {
-                                        <button type="submit" class="btn btn-outline-danger btn-sm" onclick="return confirm('Are you sure you want to delete this skill?')">Delete</button>
-                                    }
-                                    <a href="@Url.Action("SkillHistory", "Skills", new { id = skill.Id })" class="btn btn-outline-info btn-sm">History</a>
-                                </div>
-                            </td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
-        </div>
-    </div>
-}
-
-@await Html.PartialAsync("_AllSkillHistoryPartial", Model.AllSkillHistory)
-@await Html.PartialAsync("_CategoryRadarChartPartial", new CategoryRadarChartViewModel
-{
-    CategoryNames = Model.Categories
+<div class="row">
+    <div class="col-md-1"></div>
+    <!-- Left Side: Radar Chart and All Skill History -->
+    <div class="col-md-5">
+        <h4>Skill statistics</h4>
+        @await Html.PartialAsync("_CategoryRadarChartPartial", new CategoryRadarChartViewModel
+   {
+       CategoryNames = Model.Categories
         .Where(c => c.Skills.Any())
         .OrderByDescending(c => c.Skills.Select(s => s.Rating).DefaultIfEmpty(0.0).Average())
         .Take(9)
         .Select(c => c.Name).ToList(),
-    CategoryAverages = Model.Categories
+       CategoryAverages = Model.Categories
         .Where(c => c.Skills.Any())
         .OrderByDescending(c => c.Skills.Select(s => s.Rating).DefaultIfEmpty(0.0).Average())
         .Take(9)
         .Select(c => Math.Round(c.Skills.Select(s => s.Rating).DefaultIfEmpty(0.0).Average(), 2)).ToList()
-})
+   })
+        @await Html.PartialAsync("_AllSkillHistoryPartial", Model.AllSkillHistory)
+    </div>
+
+    <!-- Right Side: Categories and Skills -->
+    <div class="col-md-5">
+        <h4>Skills</h4>
+        <div class="mb-3 d-flex gap-2">
+            @using (Html.BeginForm("AddCategory", "Skills", FormMethod.Post, new { @class = "d-flex gap-2" }))
+            {
+                @Html.TextBox("name", "", new { placeholder = "New Category Name", @class = "form-control" })
+                <button type="submit" class="btn btn-primary btn-sm">Add Category</button>
+            }
+        </div>
+
+        @if (TempData["Message"] != null)
+        {
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                @TempData["Message"]
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        }
+
+        @foreach (var category in Model.Categories)
+        {
+            <div class="card mb-3">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <a>Category:<b>@category.Name</b> Average:<b>@(category.Skills.Select(x => x.Rating).DefaultIfEmpty(0.0).Average().ToString("0.0"))</b></a>
+                    <span>
+                        <a href="@Url.Action("EditCategory", "Skills", new { id = category.Id })" class="btn btn-outline-secondary btn-sm me-1">Edit</a>
+                        @using (Html.BeginForm("DeleteCategory", "Skills", new { id = category.Id }, FormMethod.Post, true, new { @class = "d-inline" }))
+                        {
+                            <button type="submit" class="btn btn-outline-danger btn-sm" onclick="return confirm('Are you sure you want to delete this category?')">Delete</button>
+                        }
+                    </span>
+                </div>
+                <div class="card-body">
+                    @using (Html.BeginForm("AddSkill", "Skills", FormMethod.Post))
+                    {
+                        <input type="hidden" name="categoryId" value="@category.Id" />
+                        <div class="mb-2 d-flex flex-column flex-md-row align-items-md-center gap-2">
+                            <input name="name" placeholder="New Skill Name" class="form-control flex-fill" />
+                            <input type="number" name="rating" step="0.1" min="0" max="10" value="5.0" class="form-control" style="width:100px;max-width:120px;" />
+                            <button type="submit" class="btn btn-success btn-sm">Add Skill</button>
+                        </div>
+                    }
+                    <table class="table table-sm table-responsive-md">
+                        <thead>
+                            <tr><th>Skill</th><th>Rating</th><th>Notes</th><th>Update</th></tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var skill in category.Skills)
+                            {
+                                <tr>
+                                    <td>@skill.Name</td>
+                                    <td>
+                                        @using (Html.BeginForm("UpdateSkillRating", "Skills", new { id = skill.Id }, FormMethod.Post, true, new { @class = "d-flex align-items-center gap-2" }))
+                                        {
+                                            <button type="button" class="btn btn-outline-secondary decrement-btn" data-skill-id="@skill.Id">–</button>
+                                            <input id="ratingSlider-@skill.Id" type="range" name="rating" min="0" max="@(skill.CustomMaxRating ?? 10)" step="0.1" value="@skill.Rating" class="slider-bar-chart" style="width:150px;"
+                                                   oninput="this.nextElementSibling.nextElementSibling.textContent = this.value + ' / ' + @(skill.CustomMaxRating ?? 10)" />
+                                            <button type="button" class="btn btn-outline-primary increment-btn" data-skill-id="@skill.Id">+</button>
+                                            <span id="sliderValue-@skill.Id" >@skill.Rating.ToString("0.0") / @(skill.CustomMaxRating ?? 10)</span>
+                                            <button type="submit" class="btn btn-secondary btn-sm">Save</button>
+                                        }
+                                    </td>
+                                    <td>@skill.Notes</td>
+                                    <td>
+                                        <div class="btn-group">
+                                            <a href="@Url.Action("EditSkill", "Skills", new { id = skill.Id })" class="btn btn-outline-secondary btn-sm">Edit</a>
+                                            @using (Html.BeginForm("DeleteSkill", "Skills", new { id = skill.Id }, FormMethod.Post, true, new { @class = "d-inline" }))
+                                            {
+                                                <button type="submit" class="btn btn-outline-danger btn-sm" onclick="return confirm('Are you sure you want to delete this skill?')">Delete</button>
+                                            }
+                                            <a href="@Url.Action("SkillHistory", "Skills", new { id = skill.Id })" class="btn btn-outline-info btn-sm">History</a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
 <script>
     document.querySelectorAll('.increment-btn').forEach(function(btn) {
         btn.addEventListener('click', function () {

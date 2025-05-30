@@ -134,13 +134,14 @@ namespace Rating.Data
                 .ToListAsync();
         }
 
-        public async Task<List<SkillHistory>> GetAllSkillHistoryAsync(string userId)
+        public async Task<List<SkillHistory>> GetAllSkillHistoryAsync(string userId,int take)
         {
             return await _db.SkillHistories
                 .Where(h => h.UserId == userId)
                 .Include(h => h.Skill)
                 .ThenInclude(s => s.Category) 
                 .OrderByDescending(h => h.ChangedAt)
+                .Take(take)
                 .ToListAsync();
         }
     }
