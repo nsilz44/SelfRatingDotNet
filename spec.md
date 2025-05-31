@@ -9,7 +9,13 @@
 ## Potential Improvements
 
 
-12. Align everything
-
-9. Finish the light mode theme - background picture
-10. Create a button for dark mode
+1. Make postive and negative colors on history and bold
+2. Better themed colours
+3. More Professional Alignment
+4. Pictures for background
+5. Cookie to remember theme
+6. More radars on radar chart
+7. Add User authentication
+8. Intialise new users with default skills
+9. Create Test and Production databases
+10. Start deployment pipeline
