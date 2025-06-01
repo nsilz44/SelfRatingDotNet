@@ -23,11 +23,15 @@ else
         <tbody>
             @foreach (var skillHistoryModel in Model)
             {
+                var change = skillHistoryModel.NewRating - skillHistoryModel.OldRating;
+                var changeClass = change > 0 ? "rating-positive" : "rating-negative";
                 <tr>
                     <td>@skillHistoryModel.Skill.Name</td>
                     <td>@skillHistoryModel.Skill.Category.Name</td>
                     <td>@skillHistoryModel.ChangedAt.ToLocalTime().ToString("g")</td>
-                    <td>@((skillHistoryModel.NewRating - skillHistoryModel.OldRating).ToString("+0.0;-0.0"))</td>
+                    <td class="@changeClass">
+                        @(change.ToString("+0.0;-0.0"))
+                    </td>
                 </tr>
             }
         </tbody>

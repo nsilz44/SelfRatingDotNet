@@ -173,3 +173,12 @@ body {
     transition: background 0.3s;
 }
 
+.rating-positive {
+    color: #198754; /* Bootstrap green */
+    font-weight: bold;
+}
+
+.rating-negative {
+    color: #dc3545; /* Bootstrap red */
+    font-weight: bold;
+}
