@@ -50,7 +50,7 @@ function changeTheme(theme) {
                 card.style.color = '#000';
             });
             inputs.forEach(input => {
-                input.style.backgroundColor = '#FFD580';
+                input.style.backgroundColor = '#FFB347';
                 input.style.color = '#000';
             });
             break;
@@ -66,7 +66,7 @@ function changeTheme(theme) {
                 card.style.color = '#FFF';
             });
             inputs.forEach(input => {
-                input.style.backgroundColor = '#ADD8E6';
+                input.style.backgroundColor = '#6CA6CD';
                 input.style.color = '#000';
             });
             break;
@@ -82,7 +82,7 @@ function changeTheme(theme) {
                 card.style.color = '#FFF';
             });
             inputs.forEach(input => {
-                input.style.backgroundColor = '#E6E6FA';
+                input.style.backgroundColor = '#9370DB';
                 input.style.color = '#000';
             });
             break;
@@ -98,7 +98,7 @@ function changeTheme(theme) {
                 card.style.color = '#FFF';
             });
             inputs.forEach(input => {
-                input.style.backgroundColor = '#1A1A1A';
+                input.style.backgroundColor = '#333333';
                 input.style.color = '#FFF';
             });
             break;
@@ -114,7 +114,7 @@ function changeTheme(theme) {
                 card.style.color = '#000';
             });
             inputs.forEach(input => {
-                input.style.backgroundColor = '#FFFFFF';
+                input.style.backgroundColor = '#F5F5F5';
                 input.style.color = '#000';
             });
             break;
@@ -130,7 +130,7 @@ function changeTheme(theme) {
                 card.style.color = '#000';
             });
             inputs.forEach(input => {
-                input.style.backgroundColor = '#FFFFE0';
+                input.style.backgroundColor = '#FFFF99';
                 input.style.color = '#000';
             });
             break;
